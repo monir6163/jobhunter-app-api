@@ -16,9 +16,11 @@ app.use(cookieParser());
 app.use(helmet());
 
 //route imports
+import jobRoutes from "./routes/job.router.js";
 import userRoutes from "./routes/user.route.js";
 
 //routes declaration
 app.use("/api/v1/users", userRoutes);
+app.use("/api/v1/jobs", jobRoutes);
 
 export { app };
