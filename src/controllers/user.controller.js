@@ -37,7 +37,7 @@ const register = asyncHandler(async (req, res) => {
   if (!avatarLoacalPath) {
     throw new ApiError(400, "Avatar is required");
   }
-  const avatar = await cloudinaryUpload(avatarLoacalPath, "ecom/user");
+  const avatar = await cloudinaryUpload(avatarLoacalPath, "user");
   if (!avatar) {
     throw new ApiError(400, "Avatar is required");
   }

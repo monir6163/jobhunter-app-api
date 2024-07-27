@@ -1,6 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 
-const jobSchema = new Schema(
+const noticeSchema = new Schema(
   {
     title: {
       type: String,
@@ -11,18 +11,7 @@ const jobSchema = new Schema(
       type: String,
       trim: true,
     },
-    place: {
-      type: String,
-      trim: true,
-    },
     source: {
-      type: String,
-      trim: true,
-    },
-    select_last_date: {
-      type: Date,
-    },
-    apply_link: {
       type: String,
       trim: true,
     },
@@ -32,12 +21,8 @@ const jobSchema = new Schema(
         url: String,
       },
     ],
-    category: {
-      type: String,
-      trim: true,
-    },
   },
   { timestamps: true, versionKey: false }
 );
 
-export const Job = mongoose.model("Job", jobSchema);
+export const Notice = mongoose.model("Notice", noticeSchema);

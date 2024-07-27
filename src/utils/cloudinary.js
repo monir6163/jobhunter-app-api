@@ -7,6 +7,7 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
+//single image upload
 const cloudinaryUpload = async (localFilePath, folderName) => {
   try {
     if (!localFilePath) return null;
@@ -24,7 +25,32 @@ const cloudinaryUpload = async (localFilePath, folderName) => {
     return null;
   }
 };
+
+// Delete image from cloudinary
 const deleteOnCloudinary = (publicId) => {
   return cloudinary.uploader.destroy(publicId);
 };
-export { cloudinaryUpload, deleteOnCloudinary };
+
+//multiple image upload
+const cloudinaryMultipleUpload = async (localFilePaths, folderName) => {
+  try {
+    if (!localFilePaths) return null;
+    const result = await Promise.all(
+      localFilePaths.map((file) =>
+        cloudinary.uploader.upload(file, {
+          folder: folderName,
+          resource_type: "auto",
+        })
+      )
+    );
+    localFilePaths.forEach((file) => fs.unlinkSync(file));
+    return result.map((res) => ({
+      public_id: res.public_id,
+      url: res.secure_url,
+    }));
+  } catch (error) {
+    localFilePaths.forEach((file) => fs.unlinkSync(file));
+    return null;
+  }
+};
+export { cloudinaryMultipleUpload, cloudinaryUpload, deleteOnCloudinary };
